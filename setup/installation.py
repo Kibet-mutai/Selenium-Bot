@@ -30,22 +30,24 @@ class Browser:
         fields.send_keys(text)
         time.sleep(2)
 
-    def click_button(self, by:By, value:str, text:str):
+    def click_button(self, by:By, value:str):
         button = self.browser.find_element(by=by, value=value)
         button.click()
         time.sleep(2)
 
     def login_web(self, email:str, password:str):
-        self.add_input(by=By.NAME, value='username', text=email)
-        self.add_input(by=By.NAME, value='password', text=password)
-        self.click_button(by=By.ID, value='loginButton')
+        self.click_button(by=By.CSS_SELECTOR, value='#nav-main > div > a.nav-item.login-link.d-none.d-lg-block.px-20')
+        self.add_input(by=By.ID, value='login_username', text=email)
+        self.click_button(by=By.ID, value = 'login_password_continue')
+        self.add_input(by=By.ID, value='login_password', text=password)
+        self.click_button(by=By.ID, value='login_control_continue')
 
 
 
 if __name__ == '__main__':
     browser = Browser('/home/kibet/chromedriver')
 
-    browser.open_page('https://www.apartments.com/customers/login')
+    browser.open_page('https://www.upwork.com')
     time.sleep(3)
 
     browser.login_web(email='email', password='password')
