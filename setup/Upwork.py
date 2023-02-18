@@ -43,14 +43,21 @@ class Browser:
         self.click_button(by=By.ID, value='login_control_continue')
 
 
+    def search_gigs(self, value:str):
+        self.add_input(by=By.CSS_SELECTOR, value='#fwh-search-for-job-input > div > div > div > div > input', text=value)
+        self.click_button(by=By.CSS_SELECTOR, value='#main > div > div > div > div.d-none.d-lg-block.d-block-mobile-app > div.d-flex.justify-space-between > div > div.up-input-group-append > button')
+
 
 if __name__ == '__main__':
-    browser = Browser('/home/kibet/chromedriver')
+    browser = Browser(os.getenv('DRIVER_PATH'))
 
     browser.open_page('https://www.upwork.com')
     time.sleep(3)
 
-    browser.login_web(email='email', password='password')
+    browser.login_web(email=os.getenv('EMAIL'), password=os.getenv('PASSWORD'))
+    time.sleep(10)
+
+    browser.search_gigs(value='PHP')
     time.sleep(10)
 
     browser.close_page()
